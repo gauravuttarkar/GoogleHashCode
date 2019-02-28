@@ -37,24 +37,25 @@ def bestOrder(images):
 					images[0].calculateInterest(be[0][0]) + be[1] ]
 
 	return order
-# file = open("a_example.txt","r")
-# inp = file.readlines()
+	
+file = open("a_example.txt","r")
+inp = file.readline()
 
-# # n = int(input())
+n = inp
+print(n)
 
+data = file.readlines()
+data = [d[:-1] for d in data]
 
-# # images = []
-# # for i in range(n):
-# # 	st = input().split()
-# # 	li = []
-# # 	for j in st[2:]:
-# # 		li.append(j)
-# # 	print(li)
 images = []
-images.append(image(0,3,{"cat","beach","sun"}))
-images.append(image(1,2,{"selfie","smile"}))
-images.append(image(1,2,{"selfie","garden"}))
-images.append(image(0,2,{"garden","cat"}))
+for i in range(len(data)):
+	st = data[i].split()
+	if(st[0] == "H"):
+		st[0] = 0
+	else:
+		st[0] = 1
+	print(st[0],st[1],st[2:])
+	images.append(image(st[0],st[1],st[2:]))
 
 print(images)
 print(bestOrder(images))
