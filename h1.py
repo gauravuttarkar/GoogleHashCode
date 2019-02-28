@@ -5,8 +5,8 @@ class image:
 		self.tags = tags
 
 	def calculateInterest(self, image1):
-		print(type(image1))
-		print(image1)
+		#print(type(image1))
+		#print(image1)
 		i1 = len( image1.tags - self.tags ) 
 		i2 = len( image1.tags & self.tags )
 		i3 = len( self.tags - image1.tags )
@@ -18,38 +18,40 @@ def bestOrder(images):
 		return [ [images[0], images[1]], images[0].calculateInterest(images[1])]
 	interestFactor = 0
 	m = 0
-	order = None
+	
 	for i in range(len(images)):
 		be = bestOrder(images[:i]+images[i+1:])
-		print(type(be[0][-1]))
+		print(be)
+		#print(type(be[0][-1]))
 		if ( images[0].calculateInterest(be[0][0]) <  
 			images[0].calculateInterest(be[0][-1])):
+			print("1")
 			if images[0].calculateInterest(be[0][-1]) + be[1] > m:
+				print("if")
+				print(type(be[0]),be[0])
 				m = images[0].calculateInterest(be[0][-1]) + be[1]
-				order = be[0].append([images[0]])
-			return [ be[0].append([images[0]]), 
+				print(type(images[0]),images[0])
+				order = be[0] + [images[0]]
+				print(order)
+				print(m, order)
+			return [ be[0] + [images[0]], 
 					images[0].calculateInterest(be[0][-1]) + be[1] ]
 		else:
+			print("2")
 			if images[0].calculateInterest(be[0][0]) + be[1] > m:
 				m = images[0].calculateInterest(be[0][0]) + be[1]
+				print("Inside else")
+				print(type(be[0]))
+				print("**")
+				print([images[0]]+be[0])
+				print("**")
 				order = [images[0]] + be[0]
+				print(m, order)
 			return [[images[0]] + be[0], 
 					images[0].calculateInterest(be[0][0]) + be[1] ]
 
 	return order
-# file = open("a_example.txt","r")
-# inp = file.readlines()
 
-# # n = int(input())
-
-
-# # images = []
-# # for i in range(n):
-# # 	st = input().split()
-# # 	li = []
-# # 	for j in st[2:]:
-# # 		li.append(j)
-# # 	print(li)
 images = []
 images.append(image(0,3,{"cat","beach","sun"}))
 images.append(image(1,2,{"selfie","smile"}))
@@ -57,7 +59,10 @@ images.append(image(1,2,{"selfie","garden"}))
 images.append(image(0,2,{"garden","cat"}))
 
 print(images)
-print(bestOrder(images))
+order = bestOrder(images)
+
+for i in order[0]:
+	print(i.tags)
 #print(images[2].calculateInterest(images[1]))
 
 
