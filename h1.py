@@ -1,8 +1,9 @@
 class image:
-	def __init__(self, orientation, number, tags):
+	def __init__(self, orientation, number, tags, id):
 		self.orientation = orientation
 		self.number = number
 		self.tags = tags
+		self.id = id
 
 	def calculateInterest(self, image1):
 		#print(type(image1))
@@ -51,18 +52,42 @@ def bestOrder(images):
 					images[0].calculateInterest(be[0][0]) + be[1] ]
 
 	return order
+file = open("a_example.txt","r")
+inp = file.readline()
+
+n = inp
+print(n)
+
+data = file.readlines()
+data = [d[:-1] for d in data]
 
 images = []
-images.append(image(0,3,{"cat","beach","sun"}))
-images.append(image(1,2,{"selfie","smile"}))
-images.append(image(1,2,{"selfie","garden"}))
-images.append(image(0,2,{"garden","cat"}))
+for i in range(len(data)):
+	st = data[i].split()
+	if(st[0] == "H"):
+		st[0] = 0
+	else:
+		st[0] = 1
+	print(st[0],st[1],st[2:])
+	images.append(image(st[0],st[1],set(st[2:]),i))
+file.close()
+# images = []
+# images.append(image(0,3,{"cat","beach","sun"}))
+# images.append(image(1,2,{"selfie","smile"}))
+# images.append(image(1,2,{"selfie","garden"}))
+# images.append(image(0,2,{"garden","cat"}))
 
 print(images)
 order = bestOrder(images)
 
 for i in order[0]:
-	print(i.tags)
+	print(i.tags,i.id)
+
+file = open("output.txt","w")
+
+file.write(str(len(order[0]))+"\n")
+for i in order[0]:
+	file.write(str(i.id)+"\n")
 #print(images[2].calculateInterest(images[1]))
 
 
